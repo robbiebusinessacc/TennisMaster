@@ -1,5 +1,4 @@
 # TennisMaster
-currently broken
-Python Version 3 is required
-and Pygame is required.
-I can not call the start function (TennisMaster) when it running RunningGame and from RunningGame back to calling the start function.
+fully functional
+Python Version 3 is required  https://www.python.org/downloads/
+and Pygame is required.       https://www.pygame.org/download.shtml
