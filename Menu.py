@@ -126,7 +126,7 @@ class Menu:
                 if eachScore != "":
                     newList.append(int(eachScore))
                 eachScore = ""
-            else:
+            elif letter!="\n":
                 eachScore = eachScore + str(int(letter))
         return newList
 
