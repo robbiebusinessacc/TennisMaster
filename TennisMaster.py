@@ -25,7 +25,7 @@ class TennisMaster(RunningGame):
 
         TennisMaster.clearBackground(screen, screen_height_and_width)
         map = Menu.mapSelection(screen, screen_height_and_width)
-        print(str(map) + ".png <====")
+
 
         bg = pygame.image.load("images/" + str(map) + ".png")
         screen.blit(

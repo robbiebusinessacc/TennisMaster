@@ -26,6 +26,9 @@ class RunningGame:
         slowdown = 0
         speed = 12 - slowdown + score * 0.5
         speed = int(speed)
+        ball = pygame.image.load(RunningGame.imagesDirectory() + "tennisball.png")
+        clear = pygame.image.load(RunningGame.imagesDirectory() + "whiteImage.png")
+
         if powerUps == "scoreBoost" and speed % 4 == 0:
             score += 1
         elif powerUps == "ballSlow":
@@ -38,8 +41,7 @@ class RunningGame:
         if direction == "left":
             x = int(screen_height_and_width / 160)
             y = int(screen_height_and_width / 2 - int(screen_height_and_width / 22))
-            ball = pygame.image.load(RunningGame.imagesDirectory() + "tennisball.png")
-            clear = pygame.image.load(RunningGame.imagesDirectory() + "whiteImage.png")
+
             bg = pygame.image.load(
                 RunningGame.imagesDirectory() + str(map) + "-left.png"
             )
@@ -89,7 +91,7 @@ class RunningGame:
                                 )
                             elif powerUps == "extraLife":
                                 powerUps = ""
-                                time.sleep(0.5)
+                                RunningGame.lost_a_life(screen)
                                 print("extra life over")
                                 backwards = True
                                 RunningGame.scoreBoard(
@@ -115,11 +117,12 @@ class RunningGame:
                                     powerUps,
                                 )
                             else:
-
+                                RunningGame.lost_a_life(screen)
                                 RunningGame.failScreen(
                                     screen, screen_height_and_width, score
                                 )
                         else:
+                            RunningGame.lost_a_life(screen)
                             RunningGame.failScreen(
                                 screen, screen_height_and_width, score
                             )
@@ -147,8 +150,7 @@ class RunningGame:
         if direction == "right":
             x = int(screen_height_and_width - screen_height_and_width / 160)
             y = int(screen_height_and_width / 2 - int(screen_height_and_width / 22))
-            ball = pygame.image.load(RunningGame.imagesDirectory() + "tennisball.png")
-            clear = pygame.image.load(RunningGame.imagesDirectory() + "whiteImage.png")
+
             bg = pygame.image.load(
                 RunningGame.imagesDirectory() + str(map) + "-right.png"
             )
@@ -198,7 +200,7 @@ class RunningGame:
                                 )
                             elif powerUps == "extraLife":
                                 powerUps = ""
-                                time.sleep(0.5)
+                                RunningGame.lost_a_life(screen)
                                 print("extra life over")
                                 backwards = True
                                 RunningGame.scoreBoard(
@@ -224,11 +226,12 @@ class RunningGame:
                                     powerUps,
                                 )
                             else:
-
+                                RunningGame.lost_a_life(screen)
                                 RunningGame.failScreen(
                                     screen, screen_height_and_width, score
                                 )
                         else:
+                            RunningGame.lost_a_life(screen)
                             RunningGame.failScreen(
                                 screen, screen_height_and_width, score
                             )
@@ -256,8 +259,6 @@ class RunningGame:
         if direction == "up":
             x = int(screen_height_and_width / 2 - screen_height_and_width / 20)
             y = int(int(screen_height_and_width / 80))
-            ball = pygame.image.load(RunningGame.imagesDirectory() + "tennisball.png")
-            clear = pygame.image.load(RunningGame.imagesDirectory() + "whiteImage.png")
 
             bg = pygame.image.load(RunningGame.imagesDirectory() + str(map) + "-up.png")
             start = int(screen_height_and_width / 160)
@@ -306,7 +307,7 @@ class RunningGame:
                                 )
                             elif powerUps == "extraLife":
                                 powerUps = ""
-                                time.sleep(0.5)
+                                RunningGame.lost_a_life(screen)
                                 print("extra life over")
                                 backwards = True
                                 RunningGame.scoreBoard(
@@ -332,10 +333,12 @@ class RunningGame:
                                     powerUps,
                                 )
                             else:
+                                RunningGame.lost_a_life(screen)
                                 RunningGame.failScreen(
                                     screen, screen_height_and_width, score
                                 )
                         else:
+                            RunningGame.lost_a_life(screen)
                             RunningGame.failScreen(
                                 screen, screen_height_and_width, score
                             )
@@ -363,8 +366,7 @@ class RunningGame:
         if direction == "down":
             x = int(screen_height_and_width / 2 - screen_height_and_width / 20)
             y = int(int(screen_height_and_width - screen_height_and_width / 80))
-            ball = pygame.image.load(RunningGame.imagesDirectory() + "tennisball.png")
-            clear = pygame.image.load(RunningGame.imagesDirectory() + "whiteImage.png")
+
             bg = pygame.image.load(
                 RunningGame.imagesDirectory() + str(map) + "-down.png"
             )
@@ -412,7 +414,7 @@ class RunningGame:
                                     powerUps,
                                 )
                             elif powerUps == "extraLife":
-                                time.sleep(0.5)
+                                RunningGame.lost_a_life(screen)
                                 powerUps = ""
                                 print("extra life over")
                                 backwards = True
@@ -439,10 +441,12 @@ class RunningGame:
                                     powerUps,
                                 )
                             else:
+                                RunningGame.lost_a_life(screen)
                                 RunningGame.failScreen(
                                     screen, screen_height_and_width, score
                                 )
                         else:
+                            RunningGame.lost_a_life(screen)
                             RunningGame.failScreen(
                                 screen, screen_height_and_width, score
                             )
@@ -467,6 +471,17 @@ class RunningGame:
                     if backwards:
                         if speed > 0:
                             speed = (speed * -1) * 2
+
+    def lost_a_life(screen):
+
+        clear = pygame.image.load(RunningGame.imagesDirectory() + "whiteImage.png")
+
+        lost_a_life = pygame.image.load(RunningGame.imagesDirectory() + "lostalife.png")
+
+        screen.blit(pygame.transform.scale(lost_a_life, (300, 290)), (250, 255))
+
+        pygame.display.update()
+        time.sleep(1.1)
 
     def NextBall(screen, screen_height_and_width, score, map, powerUps):
         newDirection = random.randint(1, 4)
@@ -597,6 +612,9 @@ class RunningGame:
             scoreFile.write(
                 "," + str(score - 100000000000000000000000000000000000000000000)
             )
+        with open("score.txt") as read:
+            lines = read.readlines()
+            print(lines)
         RunningGame.scoreBoard(screen, screen_height_and_width, score)
         pygame.display.update()
         time.sleep(1)
@@ -605,8 +623,6 @@ class RunningGame:
 
         RunningGame.clearBackground(screen, screen_height_and_width)
         map = Menu.mapSelection(screen, screen_height_and_width)
-        print(str(map) + ".png <====")
-
         bg = pygame.image.load("images/" + str(map) + ".png")
         screen.blit(
             pygame.transform.scale(

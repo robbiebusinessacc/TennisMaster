@@ -15,7 +15,6 @@ class Menu:
         with open("score.txt", "r") as scoreFile:
             scoreText = scoreFile.read()
         highScore = max(Menu.Convert_To_List(scoreText))
-        print(highScore, "<---")
         clear = pygame.image.load("images/" + "whiteImage.png")
         screen.blit(
             pygame.transform.scale(
@@ -23,15 +22,15 @@ class Menu:
             ),
             (0, 0),
         )
-        if highScore < 20:
+        if highScore < 15:
             powerUpSelection = pygame.image.load("images/" + "powerUp-1.png")
-        elif highScore < 30 and highScore >= 20:
+        elif highScore < 25 and highScore >= 15:
             powerUpSelection = pygame.image.load("images/" + "powerUp-2.png")
-        elif highScore < 40 and highScore >= 30:
+        elif highScore < 35 and highScore >= 25:
             powerUpSelection = pygame.image.load("images/" + "powerUp-3.png")
-        elif highScore < 60 and highScore >= 40:
+        elif highScore < 50 and highScore >= 35:
             powerUpSelection = pygame.image.load("images/" + "powerUp-4.png")
-        elif highScore >= 60 or highScore == 60:
+        elif highScore >= 50 or highScore == 50:
             powerUpSelection = pygame.image.load("images/" + "powerUp-5.png")
         screen.blit(
             pygame.transform.scale(
@@ -45,19 +44,19 @@ class Menu:
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
                     if event.key == 49:  # 49 for 1
-                        print("scoreBoost")
+                        print("\n\nscoreBoost\n\n")
                         return "scoreBoost"
                     elif event.key == 50 and highScore >= 15:  # 50 for 2
-                        print("biggerHitbox")
+                        print("\n\nbiggerHitbox\n\n")
                         return "biggerHitbox"
                     elif event.key == 51 and highScore >= 25:  # 51 for 3
-                        print("ballSlow")
+                        print("\n\nballSlow\n\n")
                         return "ballSlow"
                     elif event.key == 52 and highScore >= 35:  # 51 for 3
-                        print("directionHint")
+                        print("\n\ndirectionHint\n\n\n\n")
                         return "directionHint"
                     elif event.key == 53 and highScore >= 50:  # 51 for 3
-                        print("extraLife")
+                        print("\n\nextraLife\n\n")
                         return "extraLife"
                     else:
                         print("fail")
@@ -121,6 +120,7 @@ class Menu:
     def Convert_To_List(scoreText):
         newList = []
         eachScore = ""
+        scoreText+=","
         for letter in list(scoreText):
             if letter == ",":
                 if eachScore != "":
