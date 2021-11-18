@@ -87,10 +87,6 @@ class RunningGame:
             y = int(
                 screen_height_and_width
                 / 2
-                - int(
-                    screen_height_and_width
-                    / 22
-                )
             )
 
             bg = pygame.image.load(
@@ -146,8 +142,10 @@ class RunningGame:
                         ),
                     ),
                     (
-                        x,
-                        y,
+                        x
+                        - 40,
+                        y
+                        - 40,
                     ),
                 )
                 RunningGame.scoreBoard(
@@ -311,16 +309,10 @@ class RunningGame:
         ):
             x = int(
                 screen_height_and_width
-                - screen_height_and_width
-                / 160
             )
             y = int(
                 screen_height_and_width
                 / 2
-                - int(
-                    screen_height_and_width
-                    / 22
-                )
             )
 
             bg = pygame.image.load(
@@ -377,8 +369,10 @@ class RunningGame:
                         ),
                     ),
                     (
-                        x,
-                        y,
+                        x
+                        - 40,
+                        y
+                        - 40,
                     ),
                 )
                 RunningGame.scoreBoard(
@@ -542,8 +536,6 @@ class RunningGame:
             x = int(
                 screen_height_and_width
                 / 2
-                - screen_height_and_width
-                / 20
             )
             y = int(
                 int(
@@ -605,8 +597,10 @@ class RunningGame:
                         ),
                     ),
                     (
-                        x,
-                        y,
+                        x
+                        - 40,
+                        y
+                        - 40,
                     ),
                 )
                 RunningGame.scoreBoard(
@@ -771,14 +765,10 @@ class RunningGame:
             x = int(
                 screen_height_and_width
                 / 2
-                - screen_height_and_width
-                / 20
             )
             y = int(
                 int(
                     screen_height_and_width
-                    - screen_height_and_width
-                    / 80
                 )
             )
 
@@ -835,8 +825,10 @@ class RunningGame:
                         ),
                     ),
                     (
-                        x,
-                        y,
+                        x
+                        - 40,
+                        y
+                        - 40,
                     ),
                 )
                 RunningGame.scoreBoard(
