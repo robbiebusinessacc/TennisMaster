@@ -48,7 +48,7 @@ class RunningGame:
         )
         ball = pygame.image.load(
             RunningGame.imagesDirectory()
-            + "tennisball.png"
+            + map+"ball.png"
         )
         clear = pygame.image.load(
             RunningGame.imagesDirectory()
@@ -1144,7 +1144,7 @@ class RunningGame:
             )
             pygame.display.update()
             time.sleep(
-                0.05
+                0.27
             )
         if (
             newDirection
