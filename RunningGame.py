@@ -48,7 +48,8 @@ class RunningGame:
         )
         ball = pygame.image.load(
             RunningGame.imagesDirectory()
-            + map+"ball.png"
+            + map
+            + "ball.png"
         )
         clear = pygame.image.load(
             RunningGame.imagesDirectory()

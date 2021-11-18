@@ -177,6 +177,89 @@ class Menu:
                 ):
                     pygame.quit()
                     exit()
+                elif (
+                    event.type
+                    == pygame.MOUSEBUTTONDOWN
+                ):
+                    mouse = (
+                        pygame.mouse.get_pos()
+                    )
+                    mouseX = mouse[
+                        0
+                    ]
+                    mouseY = mouse[
+                        1
+                    ]
+                    if (
+                        mouseX
+                        > 140
+                        and mouseX
+                        < 380
+                        and mouseY
+                        > 175
+                        and mouseY
+                        < 415
+                    ):
+                        print(
+                            "\n\nscoreBoost\n\n"
+                        )
+                        return "scoreBoost"
+                    elif (
+                        mouseX
+                        > 429
+                        and mouseX
+                        < 650
+                        and mouseY
+                        > 175
+                        and mouseY
+                        < 415
+                    ):
+                        print(
+                            "\n\nbiggerHitbox\n\n"
+                        )
+                        return "biggerHitbox"
+                    elif (
+                        mouseX
+                        > 40
+                        and mouseX
+                        < 260
+                        and mouseY
+                        > 455
+                        and mouseY
+                        < 690
+                    ):
+                        print(
+                            "\n\nballSlow\n\n"
+                        )
+                        return "ballSlow"
+                    elif (
+                        mouseX
+                        > 275
+                        and mouseX
+                        < 510
+                        and mouseY
+                        > 455
+                        and mouseY
+                        < 690
+                    ):
+                        print(
+                            "\n\ndirectionHint\n\n\n\n"
+                        )
+                        return "directionHint"
+                    elif (
+                        mouseX
+                        > 530
+                        and mouseX
+                        < 765
+                        and mouseY
+                        > 455
+                        and mouseY
+                        < 690
+                    ):
+                        print(
+                            "\n\nextraLife\n\n"
+                        )
+                        return "extraLife"
         # bigger hitbox
         # slow down
         # extra life
@@ -311,6 +394,61 @@ class Menu:
                 ):
                     pygame.quit()
                     exit()
+                elif (
+                    event.type
+                    == pygame.MOUSEBUTTONDOWN
+                ):
+                    mouse = (
+                        pygame.mouse.get_pos()
+                    )
+                    mouseX = mouse[
+                        0
+                    ]
+                    mouseY = mouse[
+                        1
+                    ]
+                    if (
+                        mouseX
+                        > 50
+                        and mouseX
+                        < 300
+                        and mouseY
+                        > 250
+                        and mouseY
+                        < 500
+                    ):
+                        print(
+                            "test map 1"
+                        )
+                        return "map1"
+                    elif (
+                        mouseX
+                        > 300
+                        and mouseX
+                        < 500
+                        and mouseY
+                        > 250
+                        and mouseY
+                        < 500
+                    ):
+                        print(
+                            "test map 2"
+                        )
+                        return "map2"
+                    elif (
+                        mouseX
+                        > 530
+                        and mouseX
+                        < 750
+                        and mouseY
+                        > 250
+                        and mouseY
+                        < 500
+                    ):
+                        print(
+                            "test map 3"
+                        )
+                        return "map3"
 
     def Convert_To_List(
         scoreText,
@@ -399,6 +537,8 @@ class Menu:
                 if (
                     event.type
                     == pygame.KEYDOWN
+                    or event.type
+                    == pygame.MOUSEBUTTONDOWN
                 ):
                     print(
                         "key hit"
