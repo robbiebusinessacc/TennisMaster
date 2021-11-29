@@ -1,0 +1,12 @@
+Tips:
+pressing the key "p" skips the failscreen wait
+
+the map selection is based off of total score and goes
+0-250-500
+
+the powerup selection is based off of high score and goes
+0-15-25-35-50
+
+Pressing any wrong key will get make you lose during the game
+
+Also if you play too much your game might crash but dont worry about that
