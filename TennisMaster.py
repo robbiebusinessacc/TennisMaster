@@ -5,16 +5,12 @@ import Menu
 from RunningGame import *
 
 
-class TennisMaster(
-    RunningGame
-):
+class TennisMaster(RunningGame):
     def __init__(
         self,
     ):
         # super(TennisMaster, self).__init__(self,direction, screen, screen_height_and_width, score, map, powerUps)
-        self.screen_height_and_width = TennisMaster.sizeCheck(
-            self
-        )
+        self.screen_height_and_width = TennisMaster.sizeCheck(self)
         self.imagesDirectory = "images/"
         self.screen = pygame.display.set_mode(
             (
@@ -22,19 +18,13 @@ class TennisMaster(
                 self.screen_height_and_width,
             )
         )
-        TennisMaster.setUp(
-            self
-        )
+        TennisMaster.setUp(self)
 
     def setUp(
         self,
     ):
-        screen = (
-            self.screen
-        )
-        screen_height_and_width = (
-            self.screen_height_and_width
-        )
+        screen = self.screen
+        screen_height_and_width = self.screen_height_and_width
         pygame.font.init()
 
         screen.fill(
@@ -57,14 +47,8 @@ class TennisMaster(
             screen,
             screen_height_and_width,
         )
-
-        bg = pygame.image.load(
-            "images/"
-            + str(
-                map
-            )
-            + ".png"
-        )
+        print("images/" + str(map) + ".png")
+        bg = pygame.image.load("images/" + str(map) + ".png")
         screen.blit(
             pygame.transform.scale(
                 bg,
@@ -97,10 +81,7 @@ class TennisMaster(
         screen_height_and_width,
     ):
 
-        bg = pygame.image.load(
-            "images/"
-            + "whiteImage.png"
-        )
+        bg = pygame.image.load("images/" + "whiteImage.png")
         screen.blit(
             pygame.transform.scale(
                 bg,

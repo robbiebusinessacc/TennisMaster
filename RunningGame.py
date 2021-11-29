@@ -4,7 +4,7 @@ import pygame
 
 # import TennisMaster #if i have this it breaks
 from Menu import *
-
+from WorldRecord import *
 
 class RunningGame:
     def __init__(
@@ -22,10 +22,100 @@ class RunningGame:
         self.score = score
         self.map = map
         self.powerUps = powerUps
+    def extraLifeInstance(screen,screen_height_and_width,score,map,powerUps):
+        powerUps = ""
+        RunningGame.lost_a_life(
+            screen
+        )
+        print(
+            "extra life over"
+        )
+        backwards = RunningGame.processForNewBall(screen,screen_height_and_width,score,map,powerUps)
+        return(powerUps)
+    def placeBackground(clear,bg,screen_height_and_width,screen):
+        screen.blit(
+            pygame.transform.scale(
+                clear,
+                (
+                    screen_height_and_width,
+                    screen_height_and_width,
+                ),
+            ),
+            (
+                0,
+                0,
+            ),
+        )
+        screen.blit(
+            pygame.transform.scale(
+                bg,
+                (
+                    screen_height_and_width,
+                    screen_height_and_width,
+                ),
+            ),
+            (
+                0,
+                0,
+            ),
+        )
+        working = False
+        return(working)
+    def processForNewBall(
+            screen,
+            screen_height_and_width,
+            score,
+            map,
+            powerUps,):
+        backwards = True
+        RunningGame.scoreBoard(
+            screen,
+            screen_height_and_width,
+            score,
+        )
+        RunningGame.NextBall(
+            screen,
+            screen_height_and_width,
+            score,
+            map,
+            powerUps,
+        )
+        return(backwards)
+    def ballMovement(screen,screen_height_and_width,clear,bg,ball,x,y,score):
+        RunningGame.placeBackground(clear,bg,screen_height_and_width,screen)
+        screen.blit(
+            pygame.transform.scale(
+                ball,
+                (
+                    int(
+                        screen_height_and_width
+                        / 10
+                    ),
+                    int(
+                        screen_height_and_width
+                        / 10
+                    ),
+                ),
+            ),
+            (
+                x
+                - 40,
+                y
+                - 40,
+            ),
+        )
+        RunningGame.scoreBoard(
+            screen,
+            screen_height_and_width,
+            score,
+        )
+        pygame.display.update()
+        time.sleep(
+            0.005
+        )
 
     def imagesDirectory():
         return "images/"
-
     def tennisBall(
         direction,
         screen,
@@ -97,67 +187,8 @@ class RunningGame:
                 )
                 + "-left.png"
             )
-            start = int(
-                screen_height_and_width
-                / 160
-            )
             while working:
-                screen.blit(
-                    pygame.transform.scale(
-                        clear,
-                        (
-                            screen_height_and_width,
-                            screen_height_and_width,
-                        ),
-                    ),
-                    (
-                        0,
-                        0,
-                    ),
-                )
-                screen.blit(
-                    pygame.transform.scale(
-                        bg,
-                        (
-                            screen_height_and_width,
-                            screen_height_and_width,
-                        ),
-                    ),
-                    (
-                        0,
-                        0,
-                    ),
-                )
-                screen.blit(
-                    pygame.transform.scale(
-                        ball,
-                        (
-                            int(
-                                screen_height_and_width
-                                / 10
-                            ),
-                            int(
-                                screen_height_and_width
-                                / 10
-                            ),
-                        ),
-                    ),
-                    (
-                        x
-                        - 40,
-                        y
-                        - 40,
-                    ),
-                )
-                RunningGame.scoreBoard(
-                    screen,
-                    screen_height_and_width,
-                    score,
-                )
-                pygame.display.update()
-                time.sleep(
-                    0.005
-                )
+                RunningGame.ballMovement(screen,screen_height_and_width,clear,bg,ball,x,y,score)                
                 x += speed
 
                 for event in (
@@ -179,43 +210,12 @@ class RunningGame:
                                 and x
                                 < 400
                             ):
-                                backwards = True
-                                RunningGame.scoreBoard(
-                                    screen,
-                                    screen_height_and_width,
-                                    score,
-                                )
-                                RunningGame.NextBall(
-                                    screen,
-                                    screen_height_and_width,
-                                    score,
-                                    map,
-                                    powerUps,
-                                )
+                                backwards = RunningGame.processForNewBall(screen,screen_height_and_width,score,map,powerUps)
                             elif (
                                 powerUps
                                 == "extraLife"
                             ):
-                                powerUps = ""
-                                RunningGame.lost_a_life(
-                                    screen
-                                )
-                                print(
-                                    "extra life over"
-                                )
-                                backwards = True
-                                RunningGame.scoreBoard(
-                                    screen,
-                                    screen_height_and_width,
-                                    score,
-                                )
-                                RunningGame.NextBall(
-                                    screen,
-                                    screen_height_and_width,
-                                    score,
-                                    map,
-                                    powerUps,
-                                )
+                                powerUps=RunningGame.extraLifeInstance(screen,screen_height_and_width,score,map,powerUps)
                             elif (
                                 biggerHitbox
                                 and x
@@ -223,37 +223,11 @@ class RunningGame:
                                 and x
                                 < 450
                             ):
-                                backwards = True
-                                RunningGame.scoreBoard(
-                                    screen,
-                                    screen_height_and_width,
-                                    score,
-                                )
-                                RunningGame.NextBall(
-                                    screen,
-                                    screen_height_and_width,
-                                    score,
-                                    map,
-                                    powerUps,
-                                )
+                                backwards = RunningGame.processForNewBall(screen,screen_height_and_width,score,map,powerUps)
                             else:
-                                RunningGame.lost_a_life(
-                                    screen
-                                )
-                                RunningGame.failScreen(
-                                    screen,
-                                    screen_height_and_width,
-                                    score,
-                                )
+                                RunningGame.failInstance(screen,screen_height_and_width,score)
                         else:
-                            RunningGame.lost_a_life(
-                                screen
-                            )
-                            RunningGame.failScreen(
-                                screen,
-                                screen_height_and_width,
-                                score,
-                            )
+                            RunningGame.failInstance(screen,screen_height_and_width,score)
                     elif (
                         event.type
                         == pygame.QUIT
@@ -265,45 +239,9 @@ class RunningGame:
                         < screen_height_and_width
                         / 160
                     ):
-                        screen.blit(
-                            pygame.transform.scale(
-                                clear,
-                                (
-                                    screen_height_and_width,
-                                    screen_height_and_width,
-                                ),
-                            ),
-                            (
-                                0,
-                                0,
-                            ),
-                        )
-                        screen.blit(
-                            pygame.transform.scale(
-                                bg,
-                                (
-                                    screen_height_and_width,
-                                    screen_height_and_width,
-                                ),
-                            ),
-                            (
-                                0,
-                                0,
-                            ),
-                        )
-                        working = False
+                        working=RunningGame.placeBackground(clear,bg,screen_height_and_width,screen)
                     if backwards:
-                        if (
-                            speed
-                            > 0
-                        ):
-                            speed = (
-                                (
-                                    speed
-                                    * -1
-                                )
-                                * 2
-                            )
+                        speed=RunningGame.backwardsSpeedAffect(speed)
         if (
             direction
             == "right"
@@ -322,69 +260,9 @@ class RunningGame:
                     map
                 )
                 + "-right.png"
-            )
-            start = int(
-                screen_height_and_width
-                / 160
-            )
+                )
             while working:
-                screen.blit(
-                    pygame.transform.scale(
-                        clear,
-                        (
-                            screen_height_and_width,
-                            screen_height_and_width,
-                        ),
-                    ),
-                    (
-                        0,
-                        0,
-                    ),
-                )
-                screen.blit(
-                    pygame.transform.scale(
-                        bg,
-                        (
-                            screen_height_and_width,
-                            screen_height_and_width,
-                        ),
-                    ),
-                    (
-                        0,
-                        0,
-                    ),
-                )
-
-                screen.blit(
-                    pygame.transform.scale(
-                        ball,
-                        (
-                            int(
-                                screen_height_and_width
-                                / 10
-                            ),
-                            int(
-                                screen_height_and_width
-                                / 10
-                            ),
-                        ),
-                    ),
-                    (
-                        x
-                        - 40,
-                        y
-                        - 40,
-                    ),
-                )
-                RunningGame.scoreBoard(
-                    screen,
-                    screen_height_and_width,
-                    score,
-                )
-                pygame.display.update()
-                time.sleep(
-                    0.005
-                )
+                RunningGame.ballMovement(screen,screen_height_and_width,clear,bg,ball,x,y,score)
                 x -= speed
                 for event in (
                     pygame.event.get()
@@ -405,43 +283,12 @@ class RunningGame:
                                 and x
                                 > 400
                             ):
-                                backwards = True
-                                RunningGame.scoreBoard(
-                                    screen,
-                                    screen_height_and_width,
-                                    score,
-                                )
-                                RunningGame.NextBall(
-                                    screen,
-                                    screen_height_and_width,
-                                    score,
-                                    map,
-                                    powerUps,
-                                )
+                                backwards = RunningGame.processForNewBall(screen,screen_height_and_width,score,map,powerUps)
                             elif (
                                 powerUps
                                 == "extraLife"
                             ):
-                                powerUps = ""
-                                RunningGame.lost_a_life(
-                                    screen
-                                )
-                                print(
-                                    "extra life over"
-                                )
-                                backwards = True
-                                RunningGame.scoreBoard(
-                                    screen,
-                                    screen_height_and_width,
-                                    score,
-                                )
-                                RunningGame.NextBall(
-                                    screen,
-                                    screen_height_and_width,
-                                    score,
-                                    map,
-                                    powerUps,
-                                )
+                                powerUps=RunningGame.extraLifeInstance(screen,screen_height_and_width,score,map,powerUps)
                             elif (
                                 biggerHitbox
                                 and x
@@ -449,37 +296,11 @@ class RunningGame:
                                 and x
                                 < 350
                             ):
-                                backwards = True
-                                RunningGame.scoreBoard(
-                                    screen,
-                                    screen_height_and_width,
-                                    score,
-                                )
-                                RunningGame.NextBall(
-                                    screen,
-                                    screen_height_and_width,
-                                    score,
-                                    map,
-                                    powerUps,
-                                )
+                                backwards = RunningGame.processForNewBall(screen,screen_height_and_width,score,map,powerUps)
                             else:
-                                RunningGame.lost_a_life(
-                                    screen
-                                )
-                                RunningGame.failScreen(
-                                    screen,
-                                    screen_height_and_width,
-                                    score,
-                                )
+                                RunningGame.failInstance(screen,screen_height_and_width,score)
                         else:
-                            RunningGame.lost_a_life(
-                                screen
-                            )
-                            RunningGame.failScreen(
-                                screen,
-                                screen_height_and_width,
-                                score,
-                            )
+                            RunningGame.failInstance(screen,screen_height_and_width,score)
                     elif (
                         event.type
                         == pygame.QUIT
@@ -491,45 +312,9 @@ class RunningGame:
                         < screen_height_and_width
                         / 160
                     ):
-                        screen.blit(
-                            pygame.transform.scale(
-                                clear,
-                                (
-                                    screen_height_and_width,
-                                    screen_height_and_width,
-                                ),
-                            ),
-                            (
-                                0,
-                                0,
-                            ),
-                        )
-                        screen.blit(
-                            pygame.transform.scale(
-                                bg,
-                                (
-                                    screen_height_and_width,
-                                    screen_height_and_width,
-                                ),
-                            ),
-                            (
-                                0,
-                                0,
-                            ),
-                        )
-                        working = False
+                        working=RunningGame.placeBackground(clear,bg,screen_height_and_width,screen)
                     if backwards:
-                        if (
-                            speed
-                            > 0
-                        ):
-                            speed = (
-                                (
-                                    speed
-                                    * -1
-                                )
-                                * 2
-                            )
+                        speed=RunningGame.backwardsSpeedAffect(speed)
         if (
             direction
             == "up"
@@ -552,67 +337,8 @@ class RunningGame:
                 )
                 + "-up.png"
             )
-            start = int(
-                screen_height_and_width
-                / 160
-            )
             while working:
-                screen.blit(
-                    pygame.transform.scale(
-                        clear,
-                        (
-                            screen_height_and_width,
-                            screen_height_and_width,
-                        ),
-                    ),
-                    (
-                        0,
-                        0,
-                    ),
-                )
-                screen.blit(
-                    pygame.transform.scale(
-                        bg,
-                        (
-                            screen_height_and_width,
-                            screen_height_and_width,
-                        ),
-                    ),
-                    (
-                        0,
-                        0,
-                    ),
-                )
-                screen.blit(
-                    pygame.transform.scale(
-                        ball,
-                        (
-                            int(
-                                screen_height_and_width
-                                / 10
-                            ),
-                            int(
-                                screen_height_and_width
-                                / 10
-                            ),
-                        ),
-                    ),
-                    (
-                        x
-                        - 40,
-                        y
-                        - 40,
-                    ),
-                )
-                RunningGame.scoreBoard(
-                    screen,
-                    screen_height_and_width,
-                    score,
-                )
-                pygame.display.update()
-                time.sleep(
-                    0.005
-                )
+                RunningGame.ballMovement(screen,screen_height_and_width,clear,bg,ball,x,y,score)
                 y += speed
 
                 for event in (
@@ -634,43 +360,12 @@ class RunningGame:
                                 and y
                                 < 400
                             ):
-                                backwards = True
-                                RunningGame.scoreBoard(
-                                    screen,
-                                    screen_height_and_width,
-                                    score,
-                                )
-                                RunningGame.NextBall(
-                                    screen,
-                                    screen_height_and_width,
-                                    score,
-                                    map,
-                                    powerUps,
-                                )
+                                backwards = RunningGame.processForNewBall(screen,screen_height_and_width,score,map,powerUps)
                             elif (
                                 powerUps
                                 == "extraLife"
                             ):
-                                powerUps = ""
-                                RunningGame.lost_a_life(
-                                    screen
-                                )
-                                print(
-                                    "extra life over"
-                                )
-                                backwards = True
-                                RunningGame.scoreBoard(
-                                    screen,
-                                    screen_height_and_width,
-                                    score,
-                                )
-                                RunningGame.NextBall(
-                                    screen,
-                                    screen_height_and_width,
-                                    score,
-                                    map,
-                                    powerUps,
-                                )
+                                powerUps=RunningGame.extraLifeInstance(screen,screen_height_and_width,score,map,powerUps)
                             elif (
                                 biggerHitbox
                                 and y
@@ -678,37 +373,11 @@ class RunningGame:
                                 and y
                                 < 450
                             ):
-                                backwards = True
-                                RunningGame.scoreBoard(
-                                    screen,
-                                    screen_height_and_width,
-                                    score,
-                                )
-                                RunningGame.NextBall(
-                                    screen,
-                                    screen_height_and_width,
-                                    score,
-                                    map,
-                                    powerUps,
-                                )
+                                backwards = RunningGame.processForNewBall(screen,screen_height_and_width,score,map,powerUps)
                             else:
-                                RunningGame.lost_a_life(
-                                    screen
-                                )
-                                RunningGame.failScreen(
-                                    screen,
-                                    screen_height_and_width,
-                                    score,
-                                )
+                                RunningGame.failInstance(screen,screen_height_and_width,score)
                         else:
-                            RunningGame.lost_a_life(
-                                screen
-                            )
-                            RunningGame.failScreen(
-                                screen,
-                                screen_height_and_width,
-                                score,
-                            )
+                            RunningGame.failInstance(screen,screen_height_and_width,score)
                     elif (
                         event.type
                         == pygame.QUIT
@@ -720,45 +389,9 @@ class RunningGame:
                         < screen_height_and_width
                         / 160
                     ):
-                        screen.blit(
-                            pygame.transform.scale(
-                                clear,
-                                (
-                                    screen_height_and_width,
-                                    screen_height_and_width,
-                                ),
-                            ),
-                            (
-                                0,
-                                0,
-                            ),
-                        )
-                        screen.blit(
-                            pygame.transform.scale(
-                                bg,
-                                (
-                                    screen_height_and_width,
-                                    screen_height_and_width,
-                                ),
-                            ),
-                            (
-                                0,
-                                0,
-                            ),
-                        )
-                        working = False
+                        working=RunningGame.placeBackground(clear,bg,screen_height_and_width,screen)
                     if backwards:
-                        if (
-                            speed
-                            > 0
-                        ):
-                            speed = (
-                                (
-                                    speed
-                                    * -1
-                                )
-                                * 2
-                            )
+                        speed=RunningGame.backwardsSpeedAffect(speed)
         if (
             direction
             == "down"
@@ -780,67 +413,8 @@ class RunningGame:
                 )
                 + "-down.png"
             )
-            start = int(
-                screen_height_and_width
-                / 160
-            )
             while working:
-                screen.blit(
-                    pygame.transform.scale(
-                        clear,
-                        (
-                            screen_height_and_width,
-                            screen_height_and_width,
-                        ),
-                    ),
-                    (
-                        0,
-                        0,
-                    ),
-                )
-                screen.blit(
-                    pygame.transform.scale(
-                        bg,
-                        (
-                            screen_height_and_width,
-                            screen_height_and_width,
-                        ),
-                    ),
-                    (
-                        0,
-                        0,
-                    ),
-                )
-                screen.blit(
-                    pygame.transform.scale(
-                        ball,
-                        (
-                            int(
-                                screen_height_and_width
-                                / 10
-                            ),
-                            int(
-                                screen_height_and_width
-                                / 10
-                            ),
-                        ),
-                    ),
-                    (
-                        x
-                        - 40,
-                        y
-                        - 40,
-                    ),
-                )
-                RunningGame.scoreBoard(
-                    screen,
-                    screen_height_and_width,
-                    score,
-                )
-                pygame.display.update()
-                time.sleep(
-                    0.005
-                )
+                RunningGame.ballMovement(screen,screen_height_and_width,clear,bg,ball,x,y,score)               
                 y -= speed
                 for event in (
                     pygame.event.get()
@@ -861,43 +435,12 @@ class RunningGame:
                                 and y
                                 > 400
                             ):
-                                backwards = True
-                                RunningGame.scoreBoard(
-                                    screen,
-                                    screen_height_and_width,
-                                    score,
-                                )
-                                RunningGame.NextBall(
-                                    screen,
-                                    screen_height_and_width,
-                                    score,
-                                    map,
-                                    powerUps,
-                                )
+                                backwards = RunningGame.processForNewBall(screen,screen_height_and_width,score,map,powerUps)
                             elif (
                                 powerUps
                                 == "extraLife"
                             ):
-                                RunningGame.lost_a_life(
-                                    screen
-                                )
-                                powerUps = ""
-                                print(
-                                    "extra life over"
-                                )
-                                backwards = True
-                                RunningGame.scoreBoard(
-                                    screen,
-                                    screen_height_and_width,
-                                    score,
-                                )
-                                RunningGame.NextBall(
-                                    screen,
-                                    screen_height_and_width,
-                                    score,
-                                    map,
-                                    powerUps,
-                                )
+                                powerUps=RunningGame.extraLifeInstance(screen,screen_height_and_width,score,map,powerUps)
                             elif (
                                 biggerHitbox
                                 and y
@@ -905,37 +448,11 @@ class RunningGame:
                                 and y
                                 > 350
                             ):
-                                backwards = True
-                                RunningGame.scoreBoard(
-                                    screen,
-                                    screen_height_and_width,
-                                    score,
-                                )
-                                RunningGame.NextBall(
-                                    screen,
-                                    screen_height_and_width,
-                                    score,
-                                    map,
-                                    powerUps,
-                                )
+                                backwards = RunningGame.processForNewBall(screen,screen_height_and_width,score,map,powerUps)
                             else:
-                                RunningGame.lost_a_life(
-                                    screen
-                                )
-                                RunningGame.failScreen(
-                                    screen,
-                                    screen_height_and_width,
-                                    score,
-                                )
+                                RunningGame.failInstance(screen,screen_height_and_width,score)
                         else:
-                            RunningGame.lost_a_life(
-                                screen
-                            )
-                            RunningGame.failScreen(
-                                screen,
-                                screen_height_and_width,
-                                score,
-                            )
+                            RunningGame.failInstance(screen,screen_height_and_width,score)
                     elif (
                         event.type
                         == pygame.QUIT
@@ -947,46 +464,32 @@ class RunningGame:
                         < screen_height_and_width
                         / 160
                     ):
-                        screen.blit(
-                            pygame.transform.scale(
-                                clear,
-                                (
-                                    screen_height_and_width,
-                                    screen_height_and_width,
-                                ),
-                            ),
-                            (
-                                0,
-                                0,
-                            ),
-                        )
-                        screen.blit(
-                            pygame.transform.scale(
-                                bg,
-                                (
-                                    screen_height_and_width,
-                                    screen_height_and_width,
-                                ),
-                            ),
-                            (
-                                0,
-                                0,
-                            ),
-                        )
-                        working = False
+                        working=RunningGame.placeBackground(clear,bg,screen_height_and_width,screen)
                     if backwards:
-                        if (
-                            speed
-                            > 0
-                        ):
-                            speed = (
-                                (
-                                    speed
-                                    * -1
-                                )
-                                * 2
-                            )
-
+                        speed=RunningGame.backwardsSpeedAffect(speed)
+    def backwardsSpeedAffect(speed):
+        if (
+            speed
+            > 0
+        ):
+            speed = (
+                (
+                    speed
+                    * -1
+                )
+                * 2
+            )
+        return(speed)
+    def failInstance(screen,screen_height_and_width,score):
+        RunningGame.lost_a_life(
+            screen
+        )
+        RunningGame.failScreen(
+            screen,
+            screen_height_and_width,
+            score,
+        )
+        time.sleep(0.1)
     def lost_a_life(
         screen,
     ):
@@ -1041,45 +544,31 @@ class RunningGame:
                 == 1
             ):
                 x = int(
-                    screen_height_and_width
-                    / 160
+                    screen_height_and_width-screen_height_and_width+40
                 )
                 y = int(
                     screen_height_and_width
                     / 2
-                    - int(
-                        screen_height_and_width
-                        / 22
-                    )
                 )
                 arrow = pygame.image.load(
                     RunningGame.imagesDirectory()
                     + "leftArrow.png"
                 )
+
             if (
                 newDirection
                 == 2
             ):
                 x = int(
-                    screen_height_and_width
-                    - screen_height_and_width
-                    / 160
-                    - 82
+                    screen_height_and_width-40
                 )
                 y = int(
                     screen_height_and_width
                     / 2
-                    - int(
-                        screen_height_and_width
-                        / 22
-                    )
                 )
                 arrow = pygame.image.load(
                     RunningGame.imagesDirectory()
                     + "rightArrow.png"
-                )
-                print(
-                    arrow
                 )
             if (
                 newDirection
@@ -1088,15 +577,12 @@ class RunningGame:
                 x = int(
                     screen_height_and_width
                     / 2
-                    - screen_height_and_width
-                    / 20
                 )
                 y = int(
-                    int(
-                        screen_height_and_width
-                        / 80
-                    )
+                    screen_height_and_width-screen_height_and_width
+                    +40
                 )
+                
                 arrow = pygame.image.load(
                     RunningGame.imagesDirectory()
                     + "upArrow.png"
@@ -1108,16 +594,10 @@ class RunningGame:
                 x = int(
                     screen_height_and_width
                     / 2
-                    - screen_height_and_width
-                    / 20
                 )
                 y = int(
-                    int(
-                        screen_height_and_width
-                        - screen_height_and_width
-                        / 80
-                    )
-                    - 82
+                    screen_height_and_width
+                    -40
                 )
                 arrow = pygame.image.load(
                     RunningGame.imagesDirectory()
@@ -1139,8 +619,8 @@ class RunningGame:
                     ),
                 ),
                 (
-                    x,
-                    y,
+                    x-40,
+                    y-40,
                 ),
             )
             pygame.display.update()
@@ -1444,24 +924,48 @@ class RunningGame:
                     - 100000000000000000000000000000000000000000000
                 )
             )
-        with open(
-            "score.txt"
-        ) as read:
-            lines = (
-                read.readlines()
-            )
-            print(
-                lines
-            )
         RunningGame.scoreBoard(
             screen,
             screen_height_and_width,
             score,
         )
         pygame.display.update()
-        time.sleep(
-            1
-        )
+        running=True
+        startTime=time.time()
+        while running: 
+            for event in (
+                pygame.event.get()
+            ):
+                if (event.type
+                        == pygame.MOUSEBUTTONDOWN 
+                        and 
+                        Menu.KeyDownFunction(
+                            "PostScore",
+                            0,
+                        )
+                        ==
+                        True
+                    ):
+                        #print(int(score)- 100000000000000000000000000000000000000000000,"<-score")
+                        #print(screen,"<-screen")
+                        print(screen,int(score)-100000000000000000000000000000000000000000000)
+                        WorldRecord(screen,int(score)-100000000000000000000000000000000000000000000)
+
+                elif int(time.time())-int(startTime)>5.9:
+
+                    print("time done")
+                    running=False
+                if (
+                    event.type
+                    == pygame.KEYDOWN
+                ):
+                    if event.key==pygame.K_p:
+                        running=False
+                        print('skipped')
+
+
+
+
         # rerunning the game -------------------------
         Menu.startAnimation(
             screen,
