@@ -25,6 +25,13 @@ class TennisMaster(RunningGame):
     ):
         screen = self.screen
         screen_height_and_width = self.screen_height_and_width
+
+
+        pygame.display.set_caption('TennisMaster')
+        icon = pygame.image.load('images/icon'+".png")
+        pygame.display.set_icon(icon)
+        
+
         pygame.font.init()
 
         screen.fill(
