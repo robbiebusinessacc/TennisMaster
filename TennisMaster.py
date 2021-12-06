@@ -50,6 +50,10 @@ class TennisMaster(RunningGame):
             screen,
             screen_height_and_width,
         )
+        level =  Menu.levelsSelection(
+            screen,
+            screen_height_and_width,
+        )
         map = Menu.mapSelection(
             screen,
             screen_height_and_width,
@@ -69,7 +73,6 @@ class TennisMaster(RunningGame):
                 0,
             ),
         )
-        pygame.display.update()
         powerUps = Menu.powerUpSelection(
             screen,
             screen_height_and_width,
@@ -81,6 +84,7 @@ class TennisMaster(RunningGame):
             score,
             map,
             powerUps,
+            level
         )
 
     def clearBackground(
